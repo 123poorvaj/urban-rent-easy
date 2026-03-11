@@ -47,8 +47,8 @@ const Checkout = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!address || !city || !pincode || !deliveryDate) {
-      toast.error("Please fill all fields");
+    if (!address || !city || !pincode || !deliveryDate || !paymentMethod) {
+      toast.error("Please fill all fields and select a payment method");
       return;
     }
     clearCart();
