@@ -25,6 +25,7 @@ const Checkout = () => {
   const [city, setCity] = useState("");
   const [pincode, setPincode] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   if (!isAuthenticated) {
     return (
