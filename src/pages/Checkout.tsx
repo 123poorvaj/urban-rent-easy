@@ -5,10 +5,16 @@ import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calendar, MapPin, CheckCircle2 } from "lucide-react";
+import { Calendar, MapPin, CheckCircle2, CreditCard, Smartphone, Banknote } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { toast } from "sonner";
+
+const paymentMethods = [
+  { id: "upi", label: "UPI", icon: Smartphone, desc: "Google Pay, PhonePe, Paytm" },
+  { id: "card", label: "Credit/Debit Card", icon: CreditCard, desc: "Visa, Mastercard, RuPay" },
+  { id: "cod", label: "Cash on Delivery", icon: Banknote, desc: "Pay when items arrive" },
+] as const;
 
 const Checkout = () => {
   const { items, totalMonthly, totalDeposit, clearCart } = useCart();
