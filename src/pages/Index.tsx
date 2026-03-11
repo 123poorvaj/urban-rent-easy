@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Truck, Shield, Wrench, Clock } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, Truck, Shield, Wrench, Clock, Star, Send } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
 import heroImg from "@/assets/hero-living-room.jpg";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { toast } from "sonner";
 
 const features = [
   { icon: Truck, title: "Free Delivery", desc: "Delivered & assembled at your doorstep" },
