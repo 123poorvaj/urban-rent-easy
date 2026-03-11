@@ -18,6 +18,13 @@ const features = [
   { icon: Clock, title: "Flexible Tenure", desc: "Rent from 1 month to 12 months" },
 ];
 
+const testimonials = [
+  { name: "Priya Sharma", city: "Mumbai", rating: 5, text: "Rented a full living room set for my new apartment. Delivery was on time, quality is excellent. Saved me lakhs!" },
+  { name: "Rahul Mehta", city: "Bangalore", rating: 5, text: "The washing machine and fridge I rented work perfectly. Maintenance team is super responsive." },
+  { name: "Ananya Gupta", city: "Delhi", rating: 4, text: "Great concept for people who relocate often. The flexible tenure options are a game changer." },
+  { name: "Vikram Patel", city: "Pune", rating: 5, text: "Been using UrbanRentals for 6 months now. The sofa and bed quality is premium. Highly recommend!" },
+];
+
 const Index = () => {
   const featured = products.slice(0, 4);
 
