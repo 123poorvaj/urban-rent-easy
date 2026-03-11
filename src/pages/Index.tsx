@@ -104,6 +104,43 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="border-b bg-card py-16">
+        <div className="container">
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-3xl font-bold">What Our Renters Say</h2>
+            <p className="mt-1 text-muted-foreground">Real feedback from happy customers</p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {testimonials.map((t) => (
+              <div key={t.name} className="rounded-xl border bg-background p-6 shadow-soft">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-4 w-4 ${i < t.rating ? "fill-primary text-primary" : "text-muted-foreground/30"}`}
+                    />
+                  ))}
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">"{t.text}"</p>
+                <div className="mt-4 flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 font-display text-sm font-bold text-primary">
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">{t.city}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Feedback Form */}
+      <FeedbackSection />
+
       {/* CTA */}
       <section className="gradient-dark py-16 text-center">
         <div className="container">
