@@ -161,4 +161,69 @@ const Index = () => {
   );
 };
 
+const FeedbackSection = () => {
+  const [name, setName] = useState("");
+  const [rating, setRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !rating || !message) {
+      toast.error("Please fill all fields and select a rating");
+      return;
+    }
+    toast.success("Thank you for your feedback!");
+    setName("");
+    setRating(0);
+    setMessage("");
+  };
+
+  return (
+    <section className="py-16">
+      <div className="container max-w-xl">
+        <div className="mb-8 text-center">
+          <h2 className="font-display text-3xl font-bold">Share Your Experience</h2>
+          <p className="mt-1 text-muted-foreground">We'd love to hear from you</p>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border bg-card p-6 shadow-soft">
+          <div>
+            <label className="text-sm font-medium">Your Name</label>
+            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="John Doe" className="mt-1" />
+          </div>
+          <div>
+            <label className="text-sm font-medium">Rating</label>
+            <div className="mt-1 flex gap-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => setRating(star)}
+                  onMouseEnter={() => setHoverRating(star)}
+                  onMouseLeave={() => setHoverRating(0)}
+                >
+                  <Star
+                    className={`h-7 w-7 transition-colors ${
+                      star <= (hoverRating || rating)
+                        ? "fill-primary text-primary"
+                        : "text-muted-foreground/30"
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="text-sm font-medium">Your Feedback</label>
+            <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your experience..." className="mt-1" rows={4} />
+          </div>
+          <Button type="submit" className="w-full gap-2">
+            <Send className="h-4 w-4" /> Submit Feedback
+          </Button>
+        </form>
+      </div>
+    </section>
+  );
+};
+
 export default Index;
