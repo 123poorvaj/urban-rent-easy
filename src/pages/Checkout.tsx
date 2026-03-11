@@ -5,10 +5,16 @@ import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calendar, MapPin, CheckCircle2 } from "lucide-react";
+import { Calendar, MapPin, CheckCircle2, CreditCard, Smartphone, Banknote } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { toast } from "sonner";
+
+const paymentMethods = [
+  { id: "upi", label: "UPI", icon: Smartphone, desc: "Google Pay, PhonePe, Paytm" },
+  { id: "card", label: "Credit/Debit Card", icon: CreditCard, desc: "Visa, Mastercard, RuPay" },
+  { id: "cod", label: "Cash on Delivery", icon: Banknote, desc: "Pay when items arrive" },
+] as const;
 
 const Checkout = () => {
   const { items, totalMonthly, totalDeposit, clearCart } = useCart();
@@ -19,6 +25,7 @@ const Checkout = () => {
   const [city, setCity] = useState("");
   const [pincode, setPincode] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   if (!isAuthenticated) {
     return (
@@ -40,8 +47,8 @@ const Checkout = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!address || !city || !pincode || !deliveryDate) {
-      toast.error("Please fill all fields");
+    if (!address || !city || !pincode || !deliveryDate || !paymentMethod) {
+      toast.error("Please fill all fields and select a payment method");
       return;
     }
     clearCart();
@@ -110,6 +117,66 @@ const Checkout = () => {
                   min={new Date(Date.now() + 2 * 86400000).toISOString().split("T")[0]}
                 />
               </div>
+            </div>
+
+            <div className="rounded-lg border bg-card p-6">
+              <h2 className="flex items-center gap-2 font-display text-lg font-bold">
+                <CreditCard className="h-5 w-5 text-primary" /> Payment Method
+              </h2>
+              <div className="mt-4 grid gap-3">
+                {paymentMethods.map((pm) => (
+                  <label
+                    key={pm.id}
+                    className={`flex cursor-pointer items-center gap-4 rounded-lg border-2 p-4 transition-colors ${
+                      paymentMethod === pm.id
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/40"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="payment"
+                      value={pm.id}
+                      checked={paymentMethod === pm.id}
+                      onChange={() => setPaymentMethod(pm.id)}
+                      className="sr-only"
+                    />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                      <pm.icon className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">{pm.label}</p>
+                      <p className="text-xs text-muted-foreground">{pm.desc}</p>
+                    </div>
+                    {paymentMethod === pm.id && (
+                      <CheckCircle2 className="ml-auto h-5 w-5 text-primary" />
+                    )}
+                  </label>
+                ))}
+              </div>
+
+              {paymentMethod === "upi" && (
+                <div className="mt-4">
+                  <Label htmlFor="upi-id">UPI ID</Label>
+                  <Input id="upi-id" placeholder="yourname@upi" />
+                </div>
+              )}
+              {paymentMethod === "card" && (
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <div className="sm:col-span-2">
+                    <Label htmlFor="card-number">Card Number</Label>
+                    <Input id="card-number" placeholder="1234 5678 9012 3456" />
+                  </div>
+                  <div>
+                    <Label htmlFor="expiry">Expiry</Label>
+                    <Input id="expiry" placeholder="MM/YY" />
+                  </div>
+                  <div>
+                    <Label htmlFor="cvv">CVV</Label>
+                    <Input id="cvv" placeholder="123" type="password" />
+                  </div>
+                </div>
+              )}
             </div>
 
             <Button type="submit" size="lg" className="w-full">
